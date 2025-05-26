@@ -1,5 +1,6 @@
 JHMDB.tar.gz
 UCF101_v2.tar.gz
-datasets/JHMDB
-datasets/JHMDB/jhmdb_frames_exxtras
-datasets/JHMDB/annotations.zip
+
+datasets/grs_rbg_yolo.v1i.folder.zip
+datasets/annotations.zip
+
