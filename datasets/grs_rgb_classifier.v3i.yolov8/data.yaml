@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 5
+names: ['F', 'I', 'L', 'P', 'T']
+
+roboflow:
+  workspace: sibigrapi2025c
+  project: grs_rgb_classifier
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/sibigrapi2025c/grs_rgb_classifier/dataset/3

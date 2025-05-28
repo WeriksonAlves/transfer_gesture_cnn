@@ -1,6 +1,7 @@
-JHMDB.tar.gz
-UCF101_v2.tar.gz
+# This is a generated file, do not edit directly.
+# It is recommended to use the `gitignore` command to update this file.
+# See https://git-scm.com/docs/gitignore for more information.
 
-datasets/grs_rgb_classifier.v1i.yolov8.zip
-datasets/annotations.zip
-
+# Ignore all files in the datasets directory with final extensions
+datasets/*.zip
+datasets/*.tar.gz
