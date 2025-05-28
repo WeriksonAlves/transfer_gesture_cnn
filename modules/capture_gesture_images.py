@@ -7,7 +7,7 @@ import numpy as np
 
 def capture_gesture_images(output_dir, class_name, image_width=640,
                            image_height=480, camera_fps=30, save_fps=10,
-                           total_images=200):
+                           total_images=300):
     # Criação da pasta da classe
     class_dir = os.path.join(output_dir, class_name)
     os.makedirs(class_dir, exist_ok=True)
@@ -42,7 +42,7 @@ def capture_gesture_images(output_dir, class_name, image_width=640,
             # Salvar a cada "save_interval" frames
             if frame_count % save_interval == 0:
                 filename = os.path.join(
-                    class_dir, f"{class_name}_{images_saved:04d}.jpg")
+                    class_dir, f"{class_name}_{images_saved:04d}.png")
                 cv2.imwrite(filename, color_image)
                 images_saved += 1
 
@@ -66,6 +66,6 @@ def capture_gesture_images(output_dir, class_name, image_width=640,
 # Exemplo de uso
 if __name__ == "__main__":
     capture_gesture_images(
-        output_dir="/home/werikson/GitHub/SIBGRAPI2025_classifier/datasets/my_class/F",
-        class_name="F"  # Troque o nome da classe conforme necessário
+        output_dir="/home/werikson/GitHub/SIBGRAPI2025_classifier/datasets/my_class",
+        class_name="P"  # Troque o nome da classe conforme necessário
     )

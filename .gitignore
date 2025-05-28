@@ -3,5 +3,7 @@
 # See https://git-scm.com/docs/gitignore for more information.
 
 # Ignore all files in the datasets directory with final extensions
-datasets/*.zip
-datasets/*.tar.gz
+datasets/unannotated/*.zip
+datasets/unannotated/*.tar.gz
+datasets/annotated/*.zip
+datasets/annotated*.tar.gz
