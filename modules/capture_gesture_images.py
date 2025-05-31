@@ -66,6 +66,6 @@ def capture_gesture_images(output_dir, class_name, image_width=640,
 # Exemplo de uso
 if __name__ == "__main__":
     capture_gesture_images(
-        output_dir="/home/werikson/GitHub/SIBGRAPI2025_classifier/datasets/my_class",
+        output_dir="/home/werikson/GitHub/SIBGRAPI2025_classifier/datasets/captured_images",
         class_name="P"  # Troque o nome da classe conforme necessário
     )

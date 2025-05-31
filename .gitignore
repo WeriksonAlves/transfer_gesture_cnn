@@ -2,8 +2,16 @@
 # It is recommended to use the `gitignore` command to update this file.
 # See https://git-scm.com/docs/gitignore for more information.
 
-# Ignore all files in the datasets directory with final extensions
-datasets/unannotated/*.zip
-datasets/unannotated/*.tar.gz
-datasets/annotated/*.zip
-datasets/annotated*.tar.gz
+# Ignore generic test data sets (large files).
+datasets/unannotated/UCF101_v2.tar.gz
+datasets/unannotated/JHMDB.tar.gz
+
+# Ignore the unzipped files referring to the unannotated generic datasets used.
+datasets/unannotated/JHMDB_mix
+datasets/unannotated/my_class
+
+# Ignore the unzipped files related to the annotated generic datasets used.
+datasets/annotated/inf692_my_gest_pose.v5i.yolov8
+
+# Ignore the other files
+datasets/annotated/annotations.zip
