@@ -72,8 +72,6 @@ class Trainer:
             if val_acc > best_acc:
                 best_model = copy.deepcopy(self.model)
                 best_acc = val_acc
-                if save_best:
-                    torch.save(best_model.state_dict(), self.model_path)
 
             if val_acc >= upper_bound:
                 print(
@@ -81,6 +79,9 @@ class Trainer:
                     f"accuracy {val_acc:.2f}%"
                 )
                 break
+        if save_best:
+            torch.save(best_model.state_dict(),
+                       self.model_path + f'-{best_acc:.2f}.pkl')
 
         self.writer.close()
         return best_model

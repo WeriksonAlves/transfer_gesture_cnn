@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-import pyrealsense2 as rs
+# import pyrealsense2 as rs
 import cv2
 import time
 import os

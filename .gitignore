@@ -3,15 +3,12 @@
 # See https://git-scm.com/docs/gitignore for more information.
 
 # Ignore the zipped files related to the unannotated datasets.
-datasets/unannotated/UCF101_v2.tar.gz
-datasets/unannotated/JHMDB.tar.gz
+data/unannotated/UCF101_v2.tar.gz
+data/unannotated/JHMDB.tar.gz
 
 # Ignore the unzipped files related to the unannotated datasets.
-datasets/annotated/INF692_GEST_CLAS_GE.v3i.folder
-datasets/annotated/INF692_GEST_CLAS_MY.v3i.folder
-
-# Ignore the unzipped files related to the annotated generic datasets used.
-datasets/annotated/inf692_my_gest_pose.v5i.yolov8
+data/annotated/*.folder
+data/annotated/*.folder
 
 # Ignore the other files
-
+*.pyc

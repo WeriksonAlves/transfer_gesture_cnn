@@ -11,11 +11,14 @@ from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
 from src.trainer import Trainer
 from src.tester import ModelTester
+from src.utils import print_device_info
 import torch
 
 
 def main():
+    print("Versão do PyTorch:", torch.__version__)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print_device_info(device)
 
     # Load data
     loader = DatasetLoader(DATASET_PATH, BATCH_SIZE)
