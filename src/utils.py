@@ -6,7 +6,7 @@ import pyrealsense2 as rs
 import cv2
 import time
 import os
-import numpy as np
+import torch
 
 
 def capture_gesture_images(output_dir, class_name, image_width=640,
@@ -60,11 +60,27 @@ def capture_gesture_images(output_dir, class_name, image_width=640,
                 print("[INFO] Captura interrompida pelo usuário.")
                 break
 
-        print(f"[INFO] Captura finalizada. {images_saved} imagens salvas na pasta '{class_dir}'.")
+        print(f"[INFO] Captura finalizada. {images_saved} imagens"
+              f"salvas na pasta '{class_dir}'.")
 
     finally:
         pipeline.stop()
         cv2.destroyAllWindows()
+
+
+def print_device_info(device: str):
+    """
+    Exibe informações sobre o dispositivo utilizado.
+    """
+    print(f"Dispositivo selecionado: {device}")
+    if device == 'cuda':
+        print("CUDA disponível:", torch.cuda.is_available())
+        print("Total de GPUs:", torch.cuda.device_count())
+        print("GPU atual:", torch.cuda.current_device())
+        print("Nome da GPU:", torch.cuda.get_device_name(
+            torch.cuda.current_device()))
+    else:
+        print("Nenhuma GPU CUDA disponível.")
 
 
 def show_tensor_image(tensor_img, label=None, mean=None, std=None):

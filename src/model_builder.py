@@ -18,8 +18,18 @@ def prepare_model(num_classes):
         torch.nn.Module: The modified ResNet-18 model ready for training on
             the specified number of classes.
     """
-    model = models.resnet18(pretrained=True)
+    model = models.resnet18(
+        weights=models.ResNet18_Weights.IMAGENET1K_V1
+    )
+
+    # Freeze all layers
     for param in model.parameters():
         param.requires_grad = False
+
+    # Replace final fully connected layer
     model.fc = nn.Linear(model.fc.in_features, num_classes)
+
+    # Enable training only for the final layer
+    for param in model.fc.parameters():
+        param.requires_grad = True
     return model

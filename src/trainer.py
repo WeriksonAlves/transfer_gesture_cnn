@@ -39,7 +39,9 @@ class Trainer:
                 total += labels.size(0)
         return 100.0 * correct / total
 
-    def train(self, epochs, log_layers=False, save_best=True):
+    def train(self, epochs, log_layers=False, save_best=True,
+              upper_bound=100.0
+              ):
         best_acc = 0.0
         best_model = None
         steps_per_epoch = len(self.train_loader)
@@ -72,6 +74,13 @@ class Trainer:
                 best_acc = val_acc
                 if save_best:
                     torch.save(best_model.state_dict(), self.model_path)
+
+            if val_acc >= upper_bound:
+                print(
+                    f"Early stopping at epoch {epoch + 1} with"
+                    f"accuracy {val_acc:.2f}%"
+                )
+                break
 
         self.writer.close()
         return best_model
