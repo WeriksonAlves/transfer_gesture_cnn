@@ -42,7 +42,8 @@ class DatasetLoader:
 
         Returns:
             dict: A dictionary containing:
-                - 'train': DataLoader for the training set with shuffling enabled.
+                - 'train': DataLoader for the training set with shuffling
+                           enabled.
                 - 'valid': DataLoader for the validation set without shuffling.
                 - 'test': DataLoader for the test set without shuffling.
                 - 'classes': List of class names inferred from the training

@@ -1,9 +1,16 @@
 # main.py
 
-from src.config import *
+from src.config import (
+    DATASET_PATH,
+    MODEL_PATH,
+    TENSORBOARD_DIR,
+    BATCH_SIZE,
+    EPOCHS
+)
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
 from src.trainer import Trainer
+from src.tester import ModelTester
 import torch
 
 
@@ -25,6 +32,15 @@ def main():
         log_layers=True,
         save_best=True
     )
+
+    # Run inference on a sample image
+    tester = ModelTester(
+        model=best_model,
+        test_data=data['test'].dataset,
+        device=device,
+        class_names=data['classes']
+    )
+    tester.sample_and_predict(seed=42)  # fixed seed for reproducibility
 
 
 if __name__ == '__main__':
