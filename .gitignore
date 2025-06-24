@@ -1,0 +1,14 @@
+# This is a generated file, do not edit directly.
+# It is recommended to use the `gitignore` command to update this file.
+# See https://git-scm.com/docs/gitignore for more information.
+
+# Ignore the zipped files related to the unannotated datasets.
+data/unannotated/UCF101_v2.tar.gz
+data/unannotated/JHMDB.tar.gz
+
+# Ignore the unzipped files related to the unannotated datasets.
+data/annotated/*.folder
+data/annotated/*.folder
+
+# Ignore the other files
+*.pyc
