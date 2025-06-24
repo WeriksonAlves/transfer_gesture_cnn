@@ -13,7 +13,7 @@ from sklearn.metrics import (
     accuracy_score
 )
 
-from src.config import DATASET_PATH, MODEL_PATH
+from src.config import DATASET_PATH, MODEL_TEST_PATH
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
 
@@ -80,7 +80,7 @@ def main():
 
     # Load model
     model = prepare_model(num_classes=len(class_names))
-    model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+    model.load_state_dict(torch.load(MODEL_TEST_PATH, map_location=device))
     model.to(device)
 
     # Run inference
