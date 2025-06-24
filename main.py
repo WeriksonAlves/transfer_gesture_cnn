@@ -5,7 +5,8 @@ from src.config import (
     MODEL_PATH,
     TENSORBOARD_DIR,
     BATCH_SIZE,
-    EPOCHS
+    EPOCHS,
+    MODEL_TEST_PATH
 )
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
@@ -26,6 +27,10 @@ def main():
 
     # Build model
     model = prepare_model(num_classes=len(data['classes']))
+
+    # Load weights from GE model (fine-tuning base)
+    model.load_state_dict(torch.load(MODEL_TEST_PATH, map_location=device))
+    print("✅ Loaded base model trained on GE for fine-tuning.")
     model.to(device)
 
     # Train model

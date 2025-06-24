@@ -1,7 +1,8 @@
 # src/config.py
-dataset = 'INF692_GEST_CLAS_GE'
+
+dataset = 'INF692_GEST_CLAS_MY'
 DATASET_PATH = f'data/annotated/{dataset}.v3i.folder/'
-TENSORBOARD_DIR = 'tensorboard/ResNet18/'
+TENSORBOARD_DIR = f'tensorboard/ResNet18-finetune-{dataset}/'
 BATCH_SIZE = 32
 EPOCHS = 100
 LEARNING_RATE = 1e-4

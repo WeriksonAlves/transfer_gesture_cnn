@@ -30,6 +30,10 @@ def prepare_model(num_classes):
     model.fc = nn.Linear(model.fc.in_features, num_classes)
 
     # Enable training only for the final layer
-    for param in model.fc.parameters():
-        param.requires_grad = True
+    # for param in model.fc.parameters():
+    #     param.requires_grad = True
+
+    for name, param in model.named_parameters():
+        param.requires_grad = (name.startswith("fc"))
+
     return model
