@@ -5,17 +5,20 @@ import torch
 from torch import nn, optim
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
-from src.config import LEARNING_RATE
+from datetime import datetime
+from src.config import LEARNING_RATE, TENSORBOARD_DIR
 
 
 class Trainer:
-    def __init__(self, model, data, device, log_dir, model_path):
+    def __init__(self, model, data, device, prefix, model_path):
         self.model = model
         self.device = device
         self.train_loader = data['train']
         self.valid_loader = data['valid']
         self.classes = data['classes']
-        self.writer = SummaryWriter(log_dir=log_dir)
+        now = datetime.now()
+        prefix = prefix + '-' + now.strftime("%Y%m%d_%H%M%S")
+        self.writer = SummaryWriter(log_dir=TENSORBOARD_DIR + prefix)
         self.model_path = model_path
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE)
@@ -40,7 +43,7 @@ class Trainer:
         return 100.0 * correct / total
 
     def train(self, epochs, log_layers=False, save_best=True,
-              upper_bound=100.0
+              upper_bound=100.0,
               ):
         best_acc = 0.0
         best_model = None
