@@ -32,7 +32,9 @@ def main():
     if MODEL_TL_PATH is not None:
         model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
         print("✅ Loaded base model trained on GE for fine-tuning.")
-        model.to(device)
+
+    # Move model to device
+    model.to(device)
 
     # Train model
     trainer = Trainer(model, data, device, PREFIX, MODEL_PATH)
@@ -42,14 +44,14 @@ def main():
         save_best=True
     )
 
-    # # Run inference on a sample image
-    # tester = ModelTester(
-    #     model=best_model,
-    #     test_data=data['test'].dataset,
-    #     device=device,
-    #     class_names=data['classes']
-    # )
-    # tester.sample_and_predict(seed=42)  # fixed seed for reproducibility
+    # Run inference on a sample image
+    tester = ModelTester(
+        model=best_model,
+        test_data=data['test'].dataset,
+        device=device,
+        class_names=data['classes']
+    )
+    tester.sample_and_predict(seed=42)  # fixed seed for reproducibility
 
 
 if __name__ == '__main__':
