@@ -1,58 +1,60 @@
 # main.py
 
+import torch
 from src.config import (
     DATASET_PATH,
     MODEL_PATH,
     BATCH_SIZE,
     EPOCHS,
-    PREFIX,
-    MODEL_TL_PATH
+    PREFIX
 )
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
 from src.trainer import Trainer
 from src.tester import ModelTester
 from src.utils import print_device_info
-import torch
 
 
 def main():
-    print("Versão do PyTorch:", torch.__version__)
+    # Display PyTorch version and device info
+    print("PyTorch version:", torch.__version__)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print_device_info(device)
 
-    # Load data
+    # Load dataset
     loader = DatasetLoader(DATASET_PATH, BATCH_SIZE)
     data = loader.load()
 
-    # Build model
-    model = prepare_model(num_classes=len(data['classes']))
+    # Initialize model architecture
+    model = prepare_model(num_classes=len(data["classes"]))
 
-    # Load weights from GE model (fine-tuning base)
-    if MODEL_TL_PATH is not None:
-        model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-        print("✅ Loaded base model trained on GE for fine-tuning.")
+    # Train the model
+    trainer = Trainer(
+        model=model,
+        data=data,
+        device=device,
+        prefix=PREFIX,
+        model_path=MODEL_PATH
+    )
 
-    # Move model to device
-    model.to(device)
-
-    # Train model
-    trainer = Trainer(model, data, device, PREFIX, MODEL_PATH)
     best_model = trainer.train(
         epochs=EPOCHS,
         log_layers=True,
-        save_best=True
+        save_best=True,
+        upper_bound=100.0,
+        debug=False
     )
 
-    # Run inference on a sample image
+    # Evaluate one random test sample
     tester = ModelTester(
         model=best_model,
-        test_data=data['test'].dataset,
+        test_data=data["test"].dataset,
         device=device,
-        class_names=data['classes']
+        class_names=data["classes"]
     )
-    tester.sample_and_predict(seed=42)  # fixed seed for reproducibility
+
+    tester.sample_and_predict(seed=42)  # Fixed seed for reproducibility
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
