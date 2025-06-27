@@ -2,6 +2,7 @@
 
 import copy
 import torch
+import time
 from torch import nn, optim
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
@@ -17,11 +18,12 @@ class Trainer:
         self.valid_loader = data['valid']
         self.classes = data['classes']
         now = datetime.now()
-        prefix = prefix + '-' + now.strftime("%Y%m%d_%H%M%S")
-        self.writer = SummaryWriter(log_dir=TENSORBOARD_DIR + prefix)
+        self.prefix = prefix + '-' + now.strftime("%Y%m%d_%H%M%S")
+        self.writer = SummaryWriter(log_dir=TENSORBOARD_DIR + self.prefix)
         self.model_path = model_path
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE)
+        # self.optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
     def _log_layers(self, epoch):
         for i, layer in enumerate(self.model.modules()):
@@ -45,6 +47,7 @@ class Trainer:
     def train(self, epochs, log_layers=False, save_best=True,
               upper_bound=100.0,
               ):
+        start_time = time.time()
         best_acc = 0.0
         best_model = None
         steps_per_epoch = len(self.train_loader)
@@ -82,6 +85,20 @@ class Trainer:
                     f"accuracy {val_acc:.2f}%"
                 )
                 break
+
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+
+        # Salva tempo em arquivo ou imprime:
+        minutes, seconds = divmod(elapsed_time, 60)
+        print(f"⏱️ Training time: {int(minutes)}m {int(seconds)}s")
+
+        with open(
+            f"{TENSORBOARD_DIR + self.prefix}_training_time.txt", "w"
+        ) as f:
+            f.write(f"{elapsed_time:.2f} seconds "
+                    f"({int(minutes)}m {int(seconds)}s)\n")
+
         if save_best:
             torch.save(best_model.state_dict(),
                        self.model_path + f'-{best_acc:.2f}.pkl')
