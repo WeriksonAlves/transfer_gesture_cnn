@@ -40,7 +40,7 @@ from torchvision.models import ResNet18_Weights
 from datetime import datetime
 
 # Select experiment mode (0 to 5)
-TRAIN_MODE = 1
+TRAIN_MODE = 2
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
@@ -74,7 +74,7 @@ elif TRAIN_MODE == 3:  # Transfer learning: Generic → Generic+Personalized
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
     FREEZE_BACKBONE = 1
     MODEL_TRAINED_PATH = (
-        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-0.0001"
+        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-SGD-20250627_232559-97.69.pkl"
     )
 
 elif TRAIN_MODE == 4:  # Transfer learning: ImageNet → Personalized
