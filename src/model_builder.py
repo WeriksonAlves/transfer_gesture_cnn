@@ -1,5 +1,6 @@
 # src/model_builder.py
 
+import torch
 import torch.nn as nn
 from torchvision import models
 from src.config import FREEZE_BACKBONE, MODEL_TRAINED_PATH
@@ -32,10 +33,12 @@ def freeze_resnet_layers(model: nn.Module, mode: int) -> None:
             param.requires_grad = True
 
 
-def prepare_model(num_classes: int, debug: bool = False) -> nn.Module:
+def prepare_model(
+    num_classes: int, device: torch.device, debug: bool = False
+) -> nn.Module:
     """
-    Builds a ResNet-18 model with a custom number of output classes and
-    optionally freezes layers depending on the configuration.
+    Prepares a ResNet-18 model with custom output layer, and loads weights
+    from ImageNet or from a local .pkl file (if given).
 
     Args:
         num_classes (int): Number of output classes for classification.
@@ -45,14 +48,24 @@ def prepare_model(num_classes: int, debug: bool = False) -> nn.Module:
     Returns:
         nn.Module: A ResNet-18 model ready for training.
     """
-    # Load pre-trained weights (ImageNet or fine-tuned)
-    model = models.resnet18(weights=MODEL_TRAINED_PATH)
+    # Load ResNet-18 base model
+    if isinstance(
+        MODEL_TRAINED_PATH, models.ResNet18_Weights
+    ) or MODEL_TRAINED_PATH is None:
+        model = models.resnet18(weights=MODEL_TRAINED_PATH)
+
+        # Replace final classification layer
+        model.fc = nn.Linear(model.fc.in_features, num_classes)
+    else:
+        model = models.resnet18(weights=None)
+        state_dict = torch.load(MODEL_TRAINED_PATH, map_location=device)
+
+        # Replace final classification layer
+        model.fc = nn.Linear(model.fc.in_features, num_classes)
+        model.load_state_dict(state_dict)
 
     # Apply layer freezing configuration
     freeze_resnet_layers(model, FREEZE_BACKBONE)
-
-    # Replace final classification layer
-    model.fc = nn.Linear(model.fc.in_features, num_classes)
 
     # Optional: print layer status for debugging
     if debug:
