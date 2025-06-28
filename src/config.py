@@ -43,10 +43,10 @@ from datetime import datetime
 TRAIN_MODE = 0
 
 # Default hyperparameters (can be overridden per mode)
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 EPOCHS = 100
 LEARNING_RATE = 1e-5
-OPTIMIZER = "Adam"
+OPTIMIZER = "SGD"
 
 # Mode-specific configuration
 if TRAIN_MODE == 0:  # Fine-tuning: ImageNet → Generic
@@ -93,8 +93,10 @@ else:
     raise ValueError("Invalid TRAIN_MODE. Choose a value from 0 to 5.")
 
 # Output and logging paths
-PREFIX = f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}"
+PREFIX = (
+    f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}-{OPTIMIZER}"
+)
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 TENSORBOARD_DIR = f"tensorboard/resnet18/{PREFIX}-{timestamp}/"
 MODEL_FILE = f"models/resnet18/{PREFIX}-{timestamp}.pkl"
-OUTPUT_PATH = f"output/resnet18/{PREFIX}-{timestamp}/"
+OUTPUT_PATH = f"outputs/resnet18/{PREFIX}-{timestamp}/"

@@ -51,8 +51,6 @@ def main():
     predictions = tester.infer()
     tester.save_results(predictions)
 
-    tester.sample_and_predict(seed=40)  # Fixed seed for reproducibility
-
 
 if __name__ == "__main__":
     main()
