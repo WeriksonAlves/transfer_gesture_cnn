@@ -24,7 +24,8 @@ def main():
     data = loader.load()
 
     # Initialize model architecture
-    model = prepare_model(num_classes=len(data["classes"]))
+    model = prepare_model(num_classes=len(data["classes"]),
+                          device=device)
 
     # Train the model
     trainer = Trainer(
