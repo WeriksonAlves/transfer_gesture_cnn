@@ -43,7 +43,7 @@ from datetime import datetime
 TRAIN_MODE = 0
 
 # Default hyperparameters (can be overridden per mode)
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 EPOCHS = 100
 LEARNING_RATE = 1e-5
 OPTIMIZER = "SGD"
