@@ -1,0 +1,23 @@
+✅ Predictions saved to: output/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-20250627_212601/predictions.csv
+
+🎯 Accuracy: 1.0000
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       1.00      1.00      1.00        60
+           I       1.00      1.00      1.00        84
+           L       1.00      1.00      1.00        67
+           P       1.00      1.00      1.00        26
+           T       1.00      1.00      1.00        71
+
+    accuracy                           1.00       308
+   macro avg       1.00      1.00      1.00       308
+weighted avg       1.00      1.00      1.00       308
+
+🖼️ Saved: output/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-20250627_212601/confusion_matrix.png
+🖼️ Saved: output/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-20250627_212601/confusion_matrix_normalized.png
+Sample Index: 6
+Prediction: Correct
+Predicted: F | True: F | Confidence: 93.97%
