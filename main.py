@@ -3,15 +3,13 @@
 import torch
 from src.config import (
     DATASET_PATH,
-    MODEL_PATH,
     BATCH_SIZE,
-    EPOCHS,
-    PREFIX
+    EPOCHS
 )
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
 from src.trainer import Trainer
-from src.tester import ModelTester
+from src.tester import Tester
 from src.utils import print_device_info
 
 
@@ -32,9 +30,7 @@ def main():
     trainer = Trainer(
         model=model,
         data=data,
-        device=device,
-        prefix=PREFIX,
-        model_path=MODEL_PATH
+        device=device
     )
 
     best_model = trainer.train(
@@ -46,14 +42,16 @@ def main():
     )
 
     # Evaluate one random test sample
-    tester = ModelTester(
+    tester = Tester(
         model=best_model,
-        test_data=data["test"].dataset,
-        device=device,
-        class_names=data["classes"]
+        data=data,
+        device=device
     )
 
-    tester.sample_and_predict(seed=42)  # Fixed seed for reproducibility
+    predictions = tester.infer()
+    tester.save_results(predictions)
+
+    tester.sample_and_predict(seed=40)  # Fixed seed for reproducibility
 
 
 if __name__ == "__main__":
