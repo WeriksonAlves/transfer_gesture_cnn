@@ -53,7 +53,7 @@ class Trainer:
         else:
             raise ValueError(f"Unsupported optimizer: {OPTIMIZER}")
 
-        self.scheduler = StepLR(self.optimizer, step_size=20, gamma=0.5)
+        self.scheduler = StepLR(self.optimizer, step_size=25, gamma=0.5)
 
     def _log_layers(self, epoch: int) -> None:
         """
