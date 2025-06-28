@@ -37,6 +37,7 @@ Raises:
 """
 
 from torchvision.models import ResNet18_Weights
+from datetime import datetime
 
 # Select experiment mode (0 to 5)
 TRAIN_MODE = 0
@@ -44,8 +45,8 @@ TRAIN_MODE = 0
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
 EPOCHS = 100
-LEARNING_RATE = 1e-4
-OPTIMIZER = "SGD"
+LEARNING_RATE = 1e-5
+OPTIMIZER = "Adam"
 
 # Mode-specific configuration
 if TRAIN_MODE == 0:  # Fine-tuning: ImageNet → Generic
@@ -93,5 +94,7 @@ else:
 
 # Output and logging paths
 PREFIX = f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}"
-TENSORBOARD_DIR = f"tensorboard/{PREFIX}/"
-MODEL_PATH = f"models/resnet18/{PREFIX}"
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+TENSORBOARD_DIR = f"tensorboard/resnet18/{PREFIX}-{timestamp}/"
+MODEL_FILE = f"models/resnet18/{PREFIX}-{timestamp}.pkl"
+OUTPUT_PATH = f"output/resnet18/{PREFIX}-{timestamp}/"
