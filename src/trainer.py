@@ -9,6 +9,7 @@ from torch import nn, optim
 from torch.optim.lr_scheduler import StepLR
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
+from ultralytics import YOLO
 
 from src.config import (
     LEARNING_RATE,
@@ -190,3 +191,143 @@ class Trainer:
 
         self.writer.close()
         return best_model
+
+
+class YOLOTrainer:
+    """
+    YOLOTrainer is a utility class for configuring, training, and saving YOLO
+    models.
+
+    Attributes:
+        model_path (str): Path to the YOLO model weights or configuration file.
+        dataset_yaml (str): Path to the dataset YAML file describing training
+            and validation data.
+        output_dir (str): Directory where training outputs and logs will be
+            saved.
+        experiment_name (str): Name of the experiment for organizing results.
+        batch_size (int): Number of samples per training batch (default: 32).
+        epochs (int): Number of training epochs (default: 10).
+        img_size (int): Input image size for training (default: 224).
+        freeze (int): Number of layers to freeze during training (default: 2).
+        optimizer (str): Optimizer to use for training (default: "SGD").
+        lr (float): Initial learning rate (default: 1e-3).
+        device (str): Device to use for training, e.g., "cpu" or "cuda"
+            (default: "cpu").
+
+    Methods:
+        train():
+            Loads the YOLO model and trains it using the specified dataset and
+                hyperparameters.
+            Returns the trained model and training results.
+
+        save_model(model: YOLO, save_path: str) -> None:
+            Saves the provided YOLO model to the specified file path, creating
+                directories as needed.
+    """
+
+    def __init__(
+        self,
+        model_path: str,
+        dataset_yaml: str,
+        output_dir: str,
+        experiment_name: str,
+        batch_size: int = 32,
+        epochs: int = 10,
+        img_size: int = 224,
+        freeze: int = 2,
+        optimizer: str = "SGD",
+        lr: float = 1e-3,
+        device: str = "cpu"
+    ):
+        """
+        Initializes the trainer with the specified configuration.
+
+        Args:
+            model_path (str): Path to the model file or architecture.
+            dataset_yaml (str): Path to the dataset configuration YAML file.
+            output_dir (str): Directory where outputs (logs, checkpoints) will
+                be saved.
+            experiment_name (str): Name of the experiment for tracking and
+                logging.
+            batch_size (int, optional): Number of samples per batch. Defaults
+                to 32.
+            epochs (int, optional): Number of training epochs. Defaults to 10.
+            img_size (int, optional): Size (height and width) to which input
+                images are resized. Defaults to 224.
+            freeze (int, optional): Number of layers to freeze during training.
+                Defaults to 2.
+            optimizer (str, optional): Optimizer to use for training (e.g.,
+                "SGD", "Adam"). Defaults to "SGD".
+            lr (float, optional): Learning rate for the optimizer. Defaults to
+                1e-3.
+            device (str, optional): Device to use for training ("cpu" or
+                "cuda"). Defaults to "cpu".
+        """
+        self.model_path = model_path
+        self.dataset_yaml = dataset_yaml
+        self.output_dir = output_dir
+        self.experiment_name = experiment_name
+        self.batch_size = batch_size
+        self.epochs = epochs
+        self.img_size = img_size
+        self.freeze = freeze
+        self.optimizer = optimizer
+        self.lr = lr
+        self.device = device
+
+    def train(self):
+        """
+        Trains a YOLO model using the specified configuration parameters.
+
+        Loads the YOLO model from the provided model path and trains it using
+            the dataset and hyperparameters defined in the instance attributes.
+            Training results and the trained model are returned.
+
+        Returns:
+            tuple: A tuple containing the trained YOLO model and the training
+                results object.
+        """
+        print("🔧 Loading model:", self.model_path)
+        model = YOLO(self.model_path)
+
+        results = model.train(
+            data=self.dataset_yaml,
+            epochs=self.epochs,
+            batch=self.batch_size,
+            imgsz=self.img_size,
+            device=self.device,
+            # workers=4,
+            optimizer=self.optimizer,
+            lr0=self.lr,
+            momentum=0.9,
+            # weight_decay=0.0005,
+            freeze=self.freeze,
+            project=self.output_dir,
+            name=self.experiment_name,
+            pretrained=True
+        )
+
+        return model, results
+
+    def save_model(self, model: YOLO, path: str) -> None:
+        """
+        Saves the given YOLO model to the specified file path.
+
+        Args:
+            model (YOLO): The YOLO model instance to be saved.
+            path (str): The file path where the model will be saved.
+
+        Returns:
+            None
+
+        Side Effects:
+            - Creates the directory specified in `path` if it does not
+                exist.
+            - Saves the model to the specified path.
+            - Prints a confirmation message with the save location.
+        """
+        if os.path.isdir(path):
+            path = os.path.join(path, "best.pt")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        model.save(path)
+        print(f"✅ Model saved to: {path}")
