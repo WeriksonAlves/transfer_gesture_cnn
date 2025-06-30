@@ -44,7 +44,7 @@ from src.config import (
 
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
-from src.trainer import Trainer
+from src.trainer import Trainer, YOLOTrainer
 from src.tester import Tester
 from src.utils import print_device_info
 
@@ -52,6 +52,7 @@ __all__ = [
     "DatasetLoader",
     "prepare_model",
     "Trainer",
+    "YOLOTrainer",
     "Tester",
     "print_device_info",
     "BATCH_SIZE",
