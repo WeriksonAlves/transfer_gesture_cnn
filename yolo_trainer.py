@@ -19,8 +19,8 @@ from ultralytics import YOLO
 
 from src.config import (
     BATCH_SIZE,
-    EPOCHS,
-    LEARNING_RATE,
+    # EPOCHS,
+    # LEARNING_RATE,
     OPTIMIZER,
     NAME_PATH,
     DATASET_PATH,
@@ -30,6 +30,8 @@ from src.config import (
     MODEL_FILE,
     OUTPUT_PATH
 )
+EPOCHS = 10
+LEARNING_RATE = 1e-3
 IMAGE_SIZE = 224
 
 
