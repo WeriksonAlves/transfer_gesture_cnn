@@ -65,7 +65,7 @@ def resnet_trainer():
 
 def resnet_tester():
     # Evaluation configuration
-    DATASET_EVAL_PATH = "data/annotated/INF692_GEST_CLAS_MY.v3i.folder/"
+    DATASET_EVAL_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
 
     # Mapping of model keys to their checkpoint paths
     MODEL_PATHS = {
@@ -145,9 +145,8 @@ def main():
     print("1. Train ResNet model")
     print("2. Test ResNet model")
     print("3. Train YOLO model")
-    print("4. Test YOLO model")
 
-    choice = input("Enter your choice (1-4): ")
+    choice = input("Enter your choice (1-3): ")
 
     if choice == "1":
         resnet_trainer()
@@ -155,8 +154,6 @@ def main():
         resnet_tester()
     elif choice == "3":
         yolo_trainer()
-    elif choice == "4":
-        yolo_tester()
     else:
         print("Invalid choice! Please select a valid option.")
 
