@@ -1,4 +1,4 @@
-# main_infer.py
+# main_tester.py
 
 import os
 import torch
