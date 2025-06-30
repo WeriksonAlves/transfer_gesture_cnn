@@ -9,7 +9,7 @@ from src.tester import Tester
 from src.utils import print_device_info
 
 # Evaluation configuration
-BATCH_SIZE = 32
+BATCH_SIZE = 8
 DATASET_EVAL_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
 
 # Mapping of model keys to their checkpoint paths
