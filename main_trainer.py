@@ -1,10 +1,12 @@
-# main.py
+# main_trainer.py
 
 import torch
 from src.config import (
     DATASET_PATH,
     BATCH_SIZE,
-    EPOCHS
+    EPOCHS,
+    FREEZE_BACKBONE,
+    MODEL_TRAINED_PATH,
 )
 from src.dataloader import DatasetLoader
 from src.model_builder import prepare_model
@@ -25,6 +27,8 @@ def main():
 
     # Initialize model architecture
     model = prepare_model(num_classes=len(data["classes"]),
+                          freeze_backbone=FREEZE_BACKBONE,
+                          model_trained_path=MODEL_TRAINED_PATH,
                           device=device)
 
     # Train the model
