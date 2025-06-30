@@ -40,7 +40,7 @@ from torchvision.models import ResNet18_Weights
 from datetime import datetime
 
 # Select experiment mode (0 to 5)
-TRAIN_MODE = 5
+TRAIN_MODE = 7
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
@@ -91,19 +91,19 @@ elif TRAIN_MODE == 5:  # Transfer learning: ImageNet → Generic+Personalized
 
 elif TRAIN_MODE == 6:  # Fine-tuning: yolov8n-pose → Generic
     NAME_PATH = "ft_yolov8n_pose_to_generic"
-    DATASET_PATH = "data/annotated/INF692_GEST_POSE_GE.v1i.yolov8.zip"
+    DATASET_PATH = "data/annotated/INF692_GEST_POSE_GE.v1i.yolov8/data.yaml"
     FREEZE_BACKBONE = 2
     MODEL_TRAINED_PATH = "yolov8n-pose.pt"
 
 elif TRAIN_MODE == 7:  # Fine-tuning: yolov8n-pose → Personalized
     NAME_PATH = "ft_yolov8n_pose_to_personalized"
-    DATASET_PATH = "data/annotated/INF692_GEST_POSE_MY.v1i.yolov8.zip"
+    DATASET_PATH = "data/annotated/INF692_GEST_POSE_MY.v5i.yolov8/data.yaml"
     FREEZE_BACKBONE = 2
     MODEL_TRAINED_PATH = "yolov8n-pose.pt"
 
 elif TRAIN_MODE == 8:  # Transfer learning: yolov8n-pose (generic) → Personalized
     NAME_PATH = "tl_yolov8n_pose_generic_to_personalized"
-    DATASET_PATH = "data/annotated/INF692_GEST_POSE_MY.v1i.yolov8.zip"
+    DATASET_PATH = "data/annotated/INF692_GEST_POSE_MY.v5i.yolov8/data.yaml"
     FREEZE_BACKBONE = 1
     MODEL_TRAINED_PATH = "models/yolov8n-pose/ft_yolov8n_pose_to_generic-b-32-e-100-lr-1e-05-SGD-"
 
