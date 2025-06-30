@@ -3,7 +3,6 @@
 import copy
 import time
 import os
-from datetime import datetime
 
 import torch
 from torch import nn, optim
@@ -11,7 +10,12 @@ from torch.optim.lr_scheduler import StepLR
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 
-from src.config import LEARNING_RATE, TENSORBOARD_DIR, OPTIMIZER
+from src.config import (
+    LEARNING_RATE,
+    TENSORBOARD_DIR,
+    OPTIMIZER,
+    MODEL_FILE
+)
 
 
 class Trainer:
@@ -24,25 +28,20 @@ class Trainer:
         train_loader (DataLoader): Training data.
         valid_loader (DataLoader): Validation data.
         classes (list): List of class names.
-        prefix (str): Unique identifier for output directory/logs.
-        model_path (str): Output path to save the trained model.
         criterion (Loss): Loss function used (CrossEntropyLoss).
         optimizer (Optimizer): SGD or Adam optimizer.
         scheduler (LR Scheduler): StepLR scheduler.
         writer (SummaryWriter): TensorBoard writer.
     """
 
-    def __init__(self, model, data, device, prefix, model_path):
+    def __init__(self, model, data, device):
         self.model = model.to(device)
         self.device = device
         self.train_loader = data["train"]
         self.valid_loader = data["valid"]
         self.classes = data["classes"]
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.prefix = f"{prefix}-{timestamp}"
-        self.writer = SummaryWriter(log_dir=TENSORBOARD_DIR + self.prefix)
-        self.model_path = model_path
+        self.writer = SummaryWriter(log_dir=TENSORBOARD_DIR)
         self.criterion = nn.CrossEntropyLoss()
 
         params = filter(lambda p: p.requires_grad, self.model.parameters())
@@ -177,7 +176,7 @@ class Trainer:
         minutes, seconds = divmod(elapsed, 60)
         print(f"⏱️ Total training time: {int(minutes)}m {int(seconds)}s")
 
-        time_log_path = f"{TENSORBOARD_DIR}{self.prefix}_training_time.txt"
+        time_log_path = f"{TENSORBOARD_DIR}_training_time.txt"
         with open(time_log_path, "w") as f:
             f.write(
                 f"{elapsed:.2f} seconds ({int(minutes)}m {int(seconds)}s)\n"
@@ -185,8 +184,8 @@ class Trainer:
 
         # Save model if required
         if save_best and best_model:
-            os.makedirs(os.path.dirname(self.model_path), exist_ok=True)
-            save_path = f"{self.model_path}-{best_acc:.2f}.pkl"
+            os.makedirs(os.path.dirname(MODEL_FILE), exist_ok=True)
+            save_path = f"{MODEL_FILE}-{best_acc:.2f}.pkl"
             torch.save(best_model.state_dict(), save_path)
 
         self.writer.close()

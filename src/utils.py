@@ -90,7 +90,7 @@ def capture_gesture_images(
         cv2.destroyAllWindows()
 
 
-def print_device_info(device: str) -> None:
+def print_device_info(device: torch.device) -> None:
     """
     Displays details about the active computation device (CPU or CUDA).
 

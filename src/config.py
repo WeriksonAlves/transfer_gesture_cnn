@@ -37,14 +37,15 @@ Raises:
 """
 
 from torchvision.models import ResNet18_Weights
+from datetime import datetime
 
 # Select experiment mode (0 to 5)
-TRAIN_MODE = 0
+TRAIN_MODE = 5
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
 EPOCHS = 100
-LEARNING_RATE = 1e-4
+LEARNING_RATE = 1e-5
 OPTIMIZER = "SGD"
 
 # Mode-specific configuration
@@ -65,7 +66,7 @@ elif TRAIN_MODE == 2:  # Transfer learning: Generic → Personalized
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_MY.v3i.folder/"
     FREEZE_BACKBONE = 1
     MODEL_TRAINED_PATH = (
-        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-0.0001"
+        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-SGD-20250627_232559-97.69.pkl"
     )
 
 elif TRAIN_MODE == 3:  # Transfer learning: Generic → Generic+Personalized
@@ -73,7 +74,7 @@ elif TRAIN_MODE == 3:  # Transfer learning: Generic → Generic+Personalized
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
     FREEZE_BACKBONE = 1
     MODEL_TRAINED_PATH = (
-        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-0.0001"
+        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-SGD-20250627_232559-97.69.pkl"
     )
 
 elif TRAIN_MODE == 4:  # Transfer learning: ImageNet → Personalized
@@ -92,6 +93,10 @@ else:
     raise ValueError("Invalid TRAIN_MODE. Choose a value from 0 to 5.")
 
 # Output and logging paths
-PREFIX = f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}"
-TENSORBOARD_DIR = f"tensorboard/{PREFIX}/"
-MODEL_PATH = f"models/resnet18/{PREFIX}"
+PREFIX = (
+    f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}-{OPTIMIZER}"
+)
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+TENSORBOARD_DIR = f"tensorboard/resnet18/{PREFIX}-{timestamp}/"
+MODEL_FILE = f"models/resnet18/{PREFIX}-{timestamp}"
+OUTPUT_PATH = f"outputs/resnet18/{PREFIX}-{timestamp}/"
