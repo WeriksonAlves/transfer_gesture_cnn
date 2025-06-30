@@ -12,5 +12,3 @@ data/annotated/*.folder
 
 # Ignore the other files
 *.pyc
-src/ResNet_ImageNet_GeMy.py
-src/ResNet_ImageNet_My.py
