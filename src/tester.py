@@ -161,17 +161,21 @@ class Tester:
 
         plt.close()
 
-    def save_results(self, results: list) -> None:
+    def save_results(self, results: list, output_dir: str = None) -> None:
         """
         Saves the inference results and evaluation report.
 
         Args:
             results (list): Output from `infer()`.
+            output_dir (str, optional): Directory to save results.
+                                       Defaults to OUTPUT_PATH.
         """
-        os.makedirs(OUTPUT_PATH, exist_ok=True)
+        if output_dir is None:
+            output_dir = OUTPUT_PATH
+        os.makedirs(output_dir, exist_ok=True)
 
         # Save CSV
-        csv_path = os.path.join(OUTPUT_PATH, "predictions.csv")
+        csv_path = os.path.join(output_dir, "predictions.csv")
         df = pd.DataFrame(results)
         df.to_csv(csv_path, index=False)
         print(f"\n✅ Predictions saved to: {csv_path}")
@@ -193,7 +197,7 @@ class Tester:
             y_pred=y_pred,
             class_names=self.class_names,
             normalize=False,
-            save_path=os.path.join(OUTPUT_PATH, "confusion_matrix.png")
+            save_path=os.path.join(output_dir, "confusion_matrix.png")
         )
 
         self.plot_confusion_matrix(
@@ -201,6 +205,6 @@ class Tester:
             y_pred=y_pred,
             class_names=self.class_names,
             normalize=True,
-            save_path=os.path.join(OUTPUT_PATH,
+            save_path=os.path.join(output_dir,
                                    "confusion_matrix_normalized.png")
         )
