@@ -17,15 +17,20 @@ import os
 import torch
 from ultralytics import YOLO
 
-
-DATASET_CONFIG_PATH = 'data/annotated/INF692_GEST_POSE_MY.v5i.yolov8/data.yaml'
-MODEL_TYPE = 'yolov8n-pose.pt'
-PROJECT_NAME = 'outputs/yolov8-pose'
-EXPERIMENT_NAME = 'ft_yolov8n_pose_to_personalized'
-OUTPUT_MODEL_PATH = f'models/yolov8-pose/{EXPERIMENT_NAME}/weights/best.pt'
-EPOCHS = 10
-IMAGE_SIZE = 640
-BATCH_SIZE = 32
+from src.config import (
+    BATCH_SIZE,
+    EPOCHS,
+    LEARNING_RATE,
+    OPTIMIZER,
+    NAME_PATH,
+    DATASET_PATH,
+    FREEZE_BACKBONE,
+    MODEL_TRAINED_PATH,
+    TENSORBOARD_DIR,
+    MODEL_FILE,
+    OUTPUT_PATH
+)
+IMAGE_SIZE = 224
 
 
 def print_device_info(device: str):
@@ -59,14 +64,14 @@ def train_model(model_path: str, dataset_path: str, device: str):
         batch=BATCH_SIZE,
         imgsz=IMAGE_SIZE,
         device=device,
-        # workers=4,
-        optimizer='SGD',
-        lr0=1e-5,
+        workers=4,
+        optimizer=OPTIMIZER,
+        lr0=LEARNING_RATE,
         momentum=0.9,
-        # weight_decay=0.0005,
-        freeze=2,  # Freezing the backbone layers
-        project=PROJECT_NAME,
-        name=EXPERIMENT_NAME,
+        weight_decay=0.0005,
+        freeze=FREEZE_BACKBONE,  # Freezing the backbone layers
+        project=OUTPUT_PATH,
+        name=NAME_PATH,
         pretrained=True
     )
 
@@ -103,10 +108,10 @@ def main():
     # loader = DatasetLoader(DATASET_PATH, BATCH_SIZE)
     # data = loader.load()
 
-    model, _ = train_model(MODEL_TYPE, DATASET_CONFIG_PATH, device)
+    model, _ = train_model(MODEL_TRAINED_PATH, DATASET_PATH, device)
 
     # evaluate_model(model)
-    save_model(model, OUTPUT_MODEL_PATH)
+    save_model(model, MODEL_FILE)
 
 
 if __name__ == '__main__':
