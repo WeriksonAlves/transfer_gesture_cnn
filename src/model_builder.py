@@ -3,7 +3,6 @@
 import torch
 import torch.nn as nn
 from torchvision import models
-from src.config import FREEZE_BACKBONE, MODEL_TRAINED_PATH
 
 
 def freeze_resnet_layers(model: nn.Module, mode: int) -> None:
@@ -34,7 +33,10 @@ def freeze_resnet_layers(model: nn.Module, mode: int) -> None:
 
 
 def prepare_model(
-    num_classes: int, device: torch.device, debug: bool = False
+    num_classes: int,
+    freeze_backbone: int,
+    model_trained_path: str,
+    device: torch.device, debug: bool = False
 ) -> nn.Module:
     """
     Prepares a ResNet-18 model with custom output layer, and loads weights
@@ -42,6 +44,14 @@ def prepare_model(
 
     Args:
         num_classes (int): Number of output classes for classification.
+        freeze_backbone (int): Configuration for freezing layers:
+            0 - No layers frozen (all trainable)
+            1 - Freeze all except final fully connected layer (fc)
+            2 - Freeze all except fc and layer4
+            3 - Freeze all except fc, layer4, and layer3
+        model_trained_path (str or models.ResNet18_Weights): Path to the
+            pretrained model weights or a torchvision weights identifier.
+        device (torch.device): Device to load the model onto (CPU or GPU).
         debug (bool): If True, prints the model architecture and layer freeze
             status.
 
@@ -50,22 +60,22 @@ def prepare_model(
     """
     # Load ResNet-18 base model
     if isinstance(
-        MODEL_TRAINED_PATH, models.ResNet18_Weights
-    ) or MODEL_TRAINED_PATH is None:
-        model = models.resnet18(weights=MODEL_TRAINED_PATH)
+        model_trained_path, models.ResNet18_Weights
+    ) or model_trained_path is None:
+        model = models.resnet18(weights=model_trained_path)
 
         # Replace final classification layer
         model.fc = nn.Linear(model.fc.in_features, num_classes)
     else:
         model = models.resnet18(weights=None)
-        state_dict = torch.load(MODEL_TRAINED_PATH, map_location=device)
+        state_dict = torch.load(model_trained_path, map_location=device)
 
         # Replace final classification layer
         model.fc = nn.Linear(model.fc.in_features, num_classes)
         model.load_state_dict(state_dict)
 
     # Apply layer freezing configuration
-    freeze_resnet_layers(model, FREEZE_BACKBONE)
+    freeze_resnet_layers(model, freeze_backbone)
 
     # Optional: print layer status for debugging
     if debug:
