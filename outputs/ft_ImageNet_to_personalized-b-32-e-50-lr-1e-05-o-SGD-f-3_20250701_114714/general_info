@@ -1,0 +1,80 @@
+(.venv) werikson@werikson-vaio:~/GitHub/SIBGRAPI2025_classifier$ /home/werikson/GitHub/SIBGRAPI2025_classifier/.venv/bin/python /home/werikson/GitHub/SIBGRAPI2025_classifier/main.py
+Welcome to the SIBGRAPI 2025 Classifier!
+Choose an option:
+1. Train ResNet model
+2. Test ResNet model
+3. Train YOLO model
+Enter your choice (1-3): 1
+PyTorch version: 2.7.1+cu128
+Selected device: cuda
+No CUDA-compatible GPU available.
+Training:   0%|                                     | 0/50 [00:00<?, ?it/s]
+New best model found at epoch 1 (accuracy: 31.72%)
+
+Training:   2%|▌                            | 1/50 [00:11<09:22, 11.47s/it]
+New best model found at epoch 2 (accuracy: 38.28%)
+
+Training:   4%|█▏                           | 2/50 [00:22<09:10, 11.47s/it]
+New best model found at epoch 3 (accuracy: 53.10%)
+
+Training:   6%|█▋                           | 3/50 [00:35<09:13, 11.78s/it]
+New best model found at epoch 4 (accuracy: 64.14%)
+
+Training:   8%|██▎                          | 4/50 [00:46<08:56, 11.67s/it]
+New best model found at epoch 5 (accuracy: 74.14%)
+
+Training:  10%|██▉                          | 5/50 [00:59<09:08, 12.20s/it]
+New best model found at epoch 6 (accuracy: 85.17%)
+
+Training:  12%|███▍                         | 6/50 [01:11<08:43, 11.90s/it]
+New best model found at epoch 7 (accuracy: 89.66%)
+
+Training:  14%|████                         | 7/50 [01:22<08:20, 11.65s/it]
+New best model found at epoch 8 (accuracy: 93.79%)
+
+Training:  16%|████▋                        | 8/50 [01:33<08:01, 11.45s/it]
+New best model found at epoch 9 (accuracy: 94.48%)
+
+Training:  18%|█████▏                       | 9/50 [01:44<07:47, 11.41s/it]
+New best model found at epoch 10 (accuracy: 96.55%)
+
+Training:  20%|█████▌                      | 10/50 [01:55<07:35, 11.39s/it]
+New best model found at epoch 11 (accuracy: 98.62%)
+
+Training:  22%|██████▏                     | 11/50 [02:06<07:17, 11.23s/it]
+New best model found at epoch 12 (accuracy: 98.97%)
+
+Training:  26%|███████▎                    | 13/50 [02:28<06:50, 11.09s/it]
+New best model found at epoch 14 (accuracy: 99.31%)
+
+Training:  30%|████████▍                   | 15/50 [02:52<06:40, 11.44s/it]
+New best model found at epoch 16 (accuracy: 99.66%)
+
+Training:  46%|████████████▉               | 23/50 [04:25<05:11, 11.54s/it]
+New best model found at epoch 24 (accuracy: 100.00%)
+
+Early stopping at epoch 24 (accuracy: 100.00%)
+Training:  46%|████████████▉               | 23/50 [04:37<05:25, 12.05s/it]
+⏱️ Total training time: 4m 37s
+Inferencing: 100%|█████████████████████████| 13/13 [00:02<00:00,  6.26it/s]
+
+✅ Predictions saved to: outputs/ft_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-3_20250701_114714/predictions.csv
+
+🎯 Accuracy: 0.9927
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.96      1.00      0.98        82
+           I       1.00      0.96      0.98        82
+           L       1.00      1.00      1.00        82
+           P       1.00      1.00      1.00        82
+           T       1.00      1.00      1.00        82
+
+    accuracy                           0.99       410
+   macro avg       0.99      0.99      0.99       410
+weighted avg       0.99      0.99      0.99       410
+
+🖼️ Saved: outputs/ft_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-3_20250701_114714/confusion_matrix.png
+🖼️ Saved: outputs/ft_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-3_20250701_114714/confusion_matrix_normalized.png
