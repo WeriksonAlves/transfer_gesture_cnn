@@ -40,12 +40,12 @@ from torchvision.models import ResNet18_Weights
 from datetime import datetime
 
 # Select experiment mode (0 to 5)
-TRAIN_MODE = 0
+TRAIN_MODE = 1
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
 EPOCHS = 50
-LEARNING_RATE = 1e-4
+LEARNING_RATE = 1e-5
 
 # Mode-specific configuration
 if TRAIN_MODE == 0:  # Fine-tuning: ImageNet → Generic
