@@ -40,31 +40,33 @@ from torchvision.models import ResNet18_Weights
 from datetime import datetime
 
 # Select experiment mode (0 to 5)
-TRAIN_MODE = 7
+TRAIN_MODE = 0
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
-EPOCHS = 100
-LEARNING_RATE = 1e-5
-OPTIMIZER = "SGD"
+EPOCHS = 50
+LEARNING_RATE = 1e-4
 
 # Mode-specific configuration
 if TRAIN_MODE == 0:  # Fine-tuning: ImageNet → Generic
     NAME_PATH = "ft_ImageNet_to_generic"
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE.v3i.folder/"
-    FREEZE_BACKBONE = 2
+    FREEZE_BACKBONE = 3
+    OPTIMIZER = "SGD"
     MODEL_TRAINED_PATH = ResNet18_Weights.IMAGENET1K_V1
 
 elif TRAIN_MODE == 1:  # Fine-tuning: ImageNet → Personalized
     NAME_PATH = "ft_ImageNet_to_personalized"
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_MY.v3i.folder/"
-    FREEZE_BACKBONE = 2
+    FREEZE_BACKBONE = 3
+    OPTIMIZER = "SGD"
     MODEL_TRAINED_PATH = ResNet18_Weights.IMAGENET1K_V1
 
 elif TRAIN_MODE == 2:  # Transfer learning: Generic → Personalized
     NAME_PATH = "tl_generic_to_personalized"
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_MY.v3i.folder/"
     FREEZE_BACKBONE = 1
+    OPTIMIZER = "Adam"
     MODEL_TRAINED_PATH = (
         "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-SGD-20250627_232559-97.69.pkl"
     )
@@ -73,6 +75,7 @@ elif TRAIN_MODE == 3:  # Transfer learning: Generic → Generic+Personalized
     NAME_PATH = "tl_generic_to_generic-personalized"
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
     FREEZE_BACKBONE = 1
+    OPTIMIZER = "Adam"
     MODEL_TRAINED_PATH = (
         "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-SGD-20250627_232559-97.69.pkl"
     )
@@ -81,12 +84,14 @@ elif TRAIN_MODE == 4:  # Transfer learning: ImageNet → Personalized
     NAME_PATH = "tl_ImageNet_to_personalized"
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_MY.v3i.folder/"
     FREEZE_BACKBONE = 1
+    OPTIMIZER = "Adam"
     MODEL_TRAINED_PATH = ResNet18_Weights.IMAGENET1K_V1
 
 elif TRAIN_MODE == 5:  # Transfer learning: ImageNet → Generic+Personalized
     NAME_PATH = "tl_ImageNet_to_generic-personalized"
     DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
     FREEZE_BACKBONE = 1
+    OPTIMIZER = "Adam"
     MODEL_TRAINED_PATH = ResNet18_Weights.IMAGENET1K_V1
 
 elif TRAIN_MODE == 6:  # Fine-tuning: yolov8n-pose → Generic
@@ -112,9 +117,9 @@ else:
 
 # Output and logging paths
 PREFIX = (
-    f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}-{OPTIMIZER}"
+    f"{NAME_PATH}-b-{BATCH_SIZE}-e-{EPOCHS}-lr-{LEARNING_RATE}-o-{OPTIMIZER}-f-{FREEZE_BACKBONE}"
 )
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-TENSORBOARD_DIR = f"tensorboard/{PREFIX}-{timestamp}/"
-MODEL_FILE = f"models/{PREFIX}-{timestamp}"
-OUTPUT_PATH = f"outputs/{PREFIX}-{timestamp}/"
+TENSORBOARD_DIR = f"tensorboard/{PREFIX}_{timestamp}/"
+MODEL_FILE = f"models/{PREFIX}_{timestamp}"
+OUTPUT_PATH = f"outputs/{PREFIX}_{timestamp}/"
