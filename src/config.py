@@ -40,7 +40,7 @@ from torchvision.models import ResNet18_Weights
 from datetime import datetime
 
 # Select experiment mode (0 to 5)
-TRAIN_MODE = 1
+TRAIN_MODE = 0
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
