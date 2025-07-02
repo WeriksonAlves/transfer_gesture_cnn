@@ -1,0 +1,111 @@
+(.venv) werikson@werikson-vaio:~/GitHub/SIBGRAPI2025_classifier$ /home/werikson/GitHub/SIBGRAPI2025_classifier/.venv/bin/python /home/werikson/GitHub/SIBGRAPI2025_classifier/main_tester.py
+PyTorch version: 2.7.1+cu128
+Selected device: cuda
+No CUDA-compatible GPU available.
+
+🧪 Evaluating model: tl_ImageNet_to_generic-personalized_Adam
+📍 Model path: models/resnet18/tl/tl_ImageNet_to_generic-personalized-b-32-e-50-lr-1e-05-o-Adam-f-1_20250702_013942-91.70.pkl
+
+Inferencing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [00:03<00:00,  6.40it/s]
+
+✅ Predictions saved to: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_generic-personalized_Adam/predictions.csv
+
+🎯 Accuracy: 0.9248
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.99      0.94      0.96       142
+           I       0.83      0.96      0.89       166
+           L       0.98      0.87      0.93       149
+           P       0.96      0.99      0.97       108
+           T       0.91      0.88      0.89       153
+
+    accuracy                           0.92       718
+   macro avg       0.93      0.93      0.93       718
+weighted avg       0.93      0.92      0.93       718
+
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_generic-personalized_Adam/confusion_matrix.png
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_generic-personalized_Adam/confusion_matrix_normalized.png
+
+🧪 Evaluating model: tl_ImageNet_to_generic-personalized_SGD
+📍 Model path: models/resnet18/tl/tl_ImageNet_to_generic-personalized-b-32-e-50-lr-1e-05-o-SGD-f-1_20250702_021758-85.38.pkl
+
+Inferencing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [00:03<00:00,  7.13it/s]
+
+✅ Predictions saved to: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_generic-personalized_SGD/predictions.csv
+
+🎯 Accuracy: 0.8705
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.91      0.89      0.90       142
+           I       0.75      0.96      0.85       166
+           L       0.93      0.81      0.87       149
+           P       0.98      0.74      0.84       108
+           T       0.89      0.90      0.90       153
+
+    accuracy                           0.87       718
+   macro avg       0.89      0.86      0.87       718
+weighted avg       0.88      0.87      0.87       718
+
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_generic-personalized_SGD/confusion_matrix.png
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_generic-personalized_SGD/confusion_matrix_normalized.png
+
+🧪 Evaluating model: tl_ImageNet_to_personalized_Adam
+📍 Model path: models/resnet18/tl/tl_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-Adam-f-1_20250702_012747-90.69.pkl
+
+Inferencing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [00:03<00:00,  6.87it/s]
+
+✅ Predictions saved to: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_personalized_Adam/predictions.csv
+
+🎯 Accuracy: 0.6504
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.86      0.58      0.70       142
+           I       0.83      0.75      0.79       166
+           L       0.63      0.60      0.61       149
+           P       0.81      0.76      0.78       108
+           T       0.39      0.58      0.46       153
+
+    accuracy                           0.65       718
+   macro avg       0.70      0.65      0.67       718
+weighted avg       0.70      0.65      0.66       718
+
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_personalized_Adam/confusion_matrix.png
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_personalized_Adam/confusion_matrix_normalized.png
+
+🧪 Evaluating model: tl_ImageNet_to_personalized_SGD
+📍 Model path: models/resnet18/tl/tl_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-1_20250702_020825-95.17.pkl
+
+Inferencing: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 23/23 [00:03<00:00,  7.04it/s]
+
+✅ Predictions saved to: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_personalized_SGD/predictions.csv
+
+🎯 Accuracy: 0.6351
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.63      0.68      0.66       142
+           I       0.90      0.45      0.60       166
+           L       0.88      0.61      0.72       149
+           P       0.75      0.76      0.76       108
+           T       0.41      0.73      0.53       153
+
+    accuracy                           0.64       718
+   macro avg       0.72      0.65      0.65       718
+weighted avg       0.72      0.64      0.64       718
+
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_personalized_SGD/confusion_matrix.png
+🖼️ Saved: outputs/resnet18/tl/models_comparation/tl_ImageNet_to_personalized_SGD/confusion_matrix_normalized.png
+
+✅ All models evaluated successfully!
+📁 Results saved in 'outputs/eval/' directory.
