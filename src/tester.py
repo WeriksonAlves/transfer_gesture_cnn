@@ -14,7 +14,6 @@ from sklearn.metrics import (
     classification_report,
     accuracy_score
 )
-from src.config import OUTPUT_PATH, BATCH_SIZE
 
 
 class Tester:
@@ -24,17 +23,21 @@ class Tester:
     Attributes:
         model (nn.Module): Model to be evaluated.
         device (torch.device): Device used (CPU or CUDA).
+        output_path (str): Directory to save results.
+        batch_size (int): Batch size for inference.
         test_loader (DataLoader): Test set DataLoader.
         class_names (list): List of class names.
         mean (np.ndarray): Normalization mean for images.
         std (np.ndarray): Normalization standard deviation for images.
     """
 
-    def __init__(self, model, data, device):
+    def __init__(self, model, data, device, output_path, batch_size):
         self.model = model.to(device)
         self.test_loader = data["test"]
         self.class_names = data["classes"]
         self.device = device
+        self.output_path = output_path
+        self.batch_size = batch_size
         self.mean = np.array([0.485, 0.456, 0.406])
         self.std = np.array([0.229, 0.224, 0.225])
 
@@ -103,7 +106,7 @@ class Tester:
 
                 for idx in range(images.size(0)):
                     predictions.append({
-                        "sample_id": i * BATCH_SIZE + idx,
+                        "sample_id": i * self.batch_size + idx,
                         "true_label": self.class_names[labels[idx].item()],
                         "predicted_label": self.class_names[
                             pred_classes[idx].item()],
@@ -168,10 +171,10 @@ class Tester:
         Args:
             results (list): Output from `infer()`.
             output_dir (str, optional): Directory to save results.
-                                       Defaults to OUTPUT_PATH.
+                                       Defaults to self.output_path.
         """
         if output_dir is None:
-            output_dir = OUTPUT_PATH
+            output_dir = self.output_path
         os.makedirs(output_dir, exist_ok=True)
 
         # Save CSV

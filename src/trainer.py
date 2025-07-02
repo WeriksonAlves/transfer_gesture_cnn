@@ -11,13 +11,6 @@ from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 from ultralytics import YOLO
 
-from src.config import (
-    LEARNING_RATE,
-    TENSORBOARD_DIR,
-    OPTIMIZER,
-    MODEL_FILE
-)
-
 
 class Trainer:
     """
@@ -29,30 +22,36 @@ class Trainer:
         train_loader (DataLoader): Training data.
         valid_loader (DataLoader): Validation data.
         classes (list): List of class names.
+        tensorboard_dir (str): Directory for TensorBoard logs.
+        model_file (str): Path to save the trained model.
         criterion (Loss): Loss function used (CrossEntropyLoss).
         optimizer (Optimizer): SGD or Adam optimizer.
         scheduler (LR Scheduler): StepLR scheduler.
         writer (SummaryWriter): TensorBoard writer.
     """
 
-    def __init__(self, model, data, device):
+    def __init__(self, model, data, device, optimizer,
+                 learning_rate, tensorboard_dir,
+                 model_file, criterion):
         self.model = model.to(device)
         self.device = device
         self.train_loader = data["train"]
         self.valid_loader = data["valid"]
         self.classes = data["classes"]
+        self.tensorboard_dir = tensorboard_dir
+        self.model_file = model_file
 
-        self.writer = SummaryWriter(log_dir=TENSORBOARD_DIR)
-        self.criterion = nn.CrossEntropyLoss()
+        self.writer = SummaryWriter(log_dir=self.tensorboard_dir)
+        self.criterion = criterion
 
         params = filter(lambda p: p.requires_grad, self.model.parameters())
 
-        if OPTIMIZER == "Adam":
-            self.optimizer = optim.Adam(params, lr=LEARNING_RATE)
-        elif OPTIMIZER == "SGD":
-            self.optimizer = optim.SGD(params, lr=LEARNING_RATE, momentum=0.9)
+        if optimizer == "Adam":
+            self.optimizer = optim.Adam(params, lr=learning_rate)
+        elif optimizer == "SGD":
+            self.optimizer = optim.SGD(params, lr=learning_rate, momentum=0.9)
         else:
-            raise ValueError(f"Unsupported optimizer: {OPTIMIZER}")
+            raise ValueError(f"Unsupported optimizer: {optimizer}")
 
         self.scheduler = StepLR(self.optimizer, step_size=20, gamma=0.5)
 
@@ -177,7 +176,7 @@ class Trainer:
         minutes, seconds = divmod(elapsed, 60)
         print(f"⏱️ Total training time: {int(minutes)}m {int(seconds)}s")
 
-        time_log_path = f"{TENSORBOARD_DIR}_training_time.txt"
+        time_log_path = f"{self.tensorboard_dir}_training_time.txt"
         with open(time_log_path, "w") as f:
             f.write(
                 f"{elapsed:.2f} seconds ({int(minutes)}m {int(seconds)}s)\n"
@@ -185,8 +184,8 @@ class Trainer:
 
         # Save model if required
         if save_best and best_model:
-            os.makedirs(os.path.dirname(MODEL_FILE), exist_ok=True)
-            save_path = f"{MODEL_FILE}-{best_acc:.2f}.pkl"
+            os.makedirs(os.path.dirname(self.model_file), exist_ok=True)
+            save_path = f"{self.model_file}-{best_acc:.2f}.pkl"
             torch.save(best_model.state_dict(), save_path)
 
         self.writer.close()
