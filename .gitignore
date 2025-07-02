@@ -8,7 +8,12 @@ data/unannotated/JHMDB.tar.gz
 
 # Ignore the unzipped files related to the unannotated datasets.
 data/annotated/*.folder
-data/annotated/*.folder
+data/annotated/*.yolov8
 
-# Ignore the other files
-*.pyc
+# Ignore the tests files and directories
+__pycache__/
+tests/
+
+# Ignore the yolo files
+yolov8n-pose.pt
+yolo11n.pt
