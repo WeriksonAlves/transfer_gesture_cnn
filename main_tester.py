@@ -9,24 +9,30 @@ from src.tester import Tester
 from src.utils import print_device_info
 
 # Evaluation configuration
-BATCH_SIZE = 8
 DATASET_EVAL_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
-
-# Mapping of model keys to their checkpoint paths
-MODEL_PATHS = {
+model_ft_paths = {
     "ft_ImageNet_to_generic":
-        "models/resnet18/ft_ImageNet_to_generic-b-32-e-100-lr-1e-05-SGD-20250627_232559-97.69.pkl",
-    "ft_ImageNet_to_personalized":
-        "models/resnet18/ft_ImageNet_to_personalized-b-32-e-100-lr-1e-05-SGD-20250627_234356-100.00.pkl",
-    "tl_generic_to_personalized":
-        "models/resnet18/tl_generic_to_personalized-b-32-e-100-lr-1e-05-SGD-20250628_000503-95.17.pkl",
+        "models/resnet18/ft/ft_ImageNet_to_generic-b-32-e-50-lr-1e-05-o-SGD-f-3_20250701_154138-97.22.pkl",
     "tl_generic_to_generic-personalized":
-        "models/resnet18/tl_generic_to_generic-personalized-b-32-e-100-lr-1e-05-SGD-20250628_003548-95.65.pkl",
-    "tl_ImageNet_to_personalized":
-        "models/resnet18/tl_ImageNet_to_personalized-b-32-e-100-lr-1e-05-SGD-20250628_220151-97.59.pkl",
-    "tl_ImageNet_to_generic-personalized":
-        "models/resnet18/tl_ImageNet_to_generic-personalized-b-32-e-100-lr-1e-05-SGD-20250628_222757-89.53.pkl"
+        "models/resnet18/ft/tl_generic_to_generic-personalized-b-32-e-50-lr-1e-05-o-Adam-f-1_20250702_033550-96.64.pkl",
+    "tl_generic_to_personalized":
+        "models/resnet18/ft/tl_generic_to_personalized-b-32-e-50-lr-1e-05-o-Adam-f-1_20250702_031925-95.17.pkl",
+    "ft_ImageNet_to_personalized":
+        "models/resnet18/ft/ft_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-3_20250701_114714-100.00.pkl",
 }
+model_tl_paths = {
+    "tl_ImageNet_to_generic-personalized_Adam":
+        "models/resnet18/tl/tl_ImageNet_to_generic-personalized-b-32-e-50-lr-1e-05-o-Adam-f-1_20250702_013942-91.70.pkl",
+    "tl_ImageNet_to_generic-personalized_SGD":
+        "models/resnet18/tl/tl_ImageNet_to_generic-personalized-b-32-e-50-lr-1e-05-o-SGD-f-1_20250702_021758-85.38.pkl",
+    "tl_ImageNet_to_personalized_Adam":
+        "models/resnet18/tl/tl_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-Adam-f-1_20250702_012747-90.69.pkl",
+    "tl_ImageNet_to_personalized_SGD":
+        "models/resnet18/tl/tl_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-1_20250702_020825-95.17.pkl"
+}
+BATCH_SIZE = 32
+MODEL_PATHS = model_ft_paths
+OUTPUT_DIR = "outputs/resnet18/ft/models_comparation/"
 
 
 def evaluate_all_models(device: torch.device, data: dict) -> None:
@@ -48,11 +54,16 @@ def evaluate_all_models(device: torch.device, data: dict) -> None:
             device=device
         )
 
-        tester = Tester(model=model, data=data, device=device)
+        tester = Tester(
+            model=model,
+            data=data,
+            device=device,
+            batch_size=BATCH_SIZE,
+            output_path=OUTPUT_DIR)
 
         results = tester.infer()
 
-        output_dir = os.path.join("outputs", "eval", key)
+        output_dir = os.path.join(OUTPUT_DIR, key)
         tester.save_results(results, output_dir=output_dir)
 
 
