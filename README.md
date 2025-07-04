@@ -1,4 +1,4 @@
-# 🤖 INF692 – Human Gesture Recognition using CNNs and YOLOv8-Pose
+# 🤖 Human Gesture Recognition using CNNs for Human-Robot Interaction
 
 This repository contains the final project for the **INF692 – Convolutional Neural Networks for Computer Vision** course. The project aims to recognize human gestures in images using both **standard CNN classifiers (ResNet18)** and **pose-based representations via YOLOv8-Pose**.
 
@@ -85,25 +85,74 @@ Additionally, YOLOv8-Pose annotations were created via **Roboflow** and exported
 
 ## 🚀 How to Run
 
-### Train ResNet18:
+### 🔧 Setup (Optional)
+
+```bash
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+````
+
+---
+
+### 🏋️‍♂️ Train ResNet18:
+
+Edit the experiment parameters in `main_trainer.py`, setting:
+
+* `TRAIN_MODE` to desired strategy (e.g., `0` to `7`)
+* `EPOCHS`, `BATCH_SIZE`, `OPTIMIZER`, etc.
+
+Then, run:
+
+```bash
+python main_trainer.py
+```
+
+This will:
+
+* Load the dataset
+* Build the ResNet18 model
+* Train and save the best model checkpoint
+* Log training metrics to TensorBoard
+
+---
+
+### 🧪 Evaluate All Models:
+
+To evaluate trained models on the combined dataset (GEN+PER), update and run:
+
+```bash
+python main_tester.py
+```
+
+This script will:
+
+* Load each `.pkl` model found in `models/`
+* Evaluate it on a fixed test split
+* Generate confusion matrices and classification reports
+* Save predictions to `/outputs/eval/`
+
+---
+
+### 🧍 YOLOv8-Pose Inference (Optional):
 
 
+---
 
-### Evaluate All Models:
-
-
-
-### Launch TensorBoard:
+### 📈 Launch TensorBoard:
 
 ```bash
 tensorboard --logdir=tensorboard/
 ```
 
----
+This will allow visualizing:
 
-## 🛠 Requirements
-
-Use the `requirements.txt` or `venv` used during development.
+* Training/validation loss
+* Accuracy curves
+* Weights and predictions histograms
 
 ---
 
