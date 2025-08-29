@@ -1,0 +1,97 @@
+(.venv) werikson@werikson-vaio:~/GitHub/cnn/transfer_gesture_cnn$ /home/werikson/GitHub/cnn/.venv/bin/python /home/werikson/GitHub/cnn/transfer_gesture_cnn/main_trainer.py
+PyTorch version: 2.7.1+cu126
+Selected device: cuda
+No CUDA-compatible GPU available.
+Training:   0%|                                             | 0/50 [00:00<?, ?it/s]
+New best model found at epoch 1 (accuracy: 27.87%)
+
+Training:   2%|▋                                    | 1/50 [00:29<24:16, 29.73s/it]
+New best model found at epoch 2 (accuracy: 33.00%)
+
+Training:   4%|█▍                                   | 2/50 [00:59<23:43, 29.66s/it]
+New best model found at epoch 3 (accuracy: 34.39%)
+
+Training:  10%|███▋                                 | 5/50 [02:25<21:46, 29.04s/it]
+New best model found at epoch 6 (accuracy: 36.17%)
+
+Training:  12%|████▍                                | 6/50 [02:54<21:12, 28.91s/it]
+New best model found at epoch 7 (accuracy: 38.14%)
+
+Training:  16%|█████▉                               | 8/50 [03:53<20:23, 29.13s/it]
+New best model found at epoch 9 (accuracy: 39.33%)
+
+Training:  18%|██████▋                              | 9/50 [04:21<19:48, 28.99s/it]
+New best model found at epoch 10 (accuracy: 40.32%)
+
+Training:  20%|███████▏                            | 10/50 [04:50<19:21, 29.03s/it]
+New best model found at epoch 11 (accuracy: 43.08%)
+
+Training:  24%|████████▋                           | 12/50 [05:48<18:22, 29.02s/it]
+New best model found at epoch 13 (accuracy: 43.68%)
+
+Training:  30%|██████████▊                         | 15/50 [07:16<16:57, 29.08s/it]
+New best model found at epoch 16 (accuracy: 46.44%)
+
+Training:  32%|███████████▌                        | 16/50 [07:45<16:26, 29.02s/it]
+New best model found at epoch 17 (accuracy: 51.78%)
+
+Training:  40%|██████████████▍                     | 20/50 [09:42<14:35, 29.17s/it]
+New best model found at epoch 21 (accuracy: 58.30%)
+
+Training:  52%|██████████████████▋                 | 26/50 [12:34<11:31, 28.80s/it]
+New best model found at epoch 27 (accuracy: 59.09%)
+
+Training:  54%|███████████████████▍                | 27/50 [13:04<11:06, 28.97s/it]
+New best model found at epoch 28 (accuracy: 61.07%)
+
+Training:  56%|████████████████████▏               | 28/50 [13:33<10:36, 28.94s/it]
+New best model found at epoch 29 (accuracy: 63.83%)
+
+Training:  62%|██████████████████████▎             | 31/50 [14:59<09:07, 28.82s/it]
+New best model found at epoch 32 (accuracy: 65.61%)
+
+Training:  66%|███████████████████████▊            | 33/50 [15:57<08:11, 28.88s/it]
+New best model found at epoch 34 (accuracy: 67.00%)
+
+Training:  70%|█████████████████████████▏          | 35/50 [16:54<07:13, 28.90s/it]
+New best model found at epoch 36 (accuracy: 70.75%)
+
+Training:  76%|███████████████████████████▎        | 38/50 [18:22<05:49, 29.16s/it]
+New best model found at epoch 39 (accuracy: 71.94%)
+
+Training:  78%|████████████████████████████        | 39/50 [18:52<05:23, 29.39s/it]
+New best model found at epoch 40 (accuracy: 72.53%)
+
+Training:  86%|██████████████████████████████▉     | 43/50 [20:51<03:27, 29.70s/it]
+New best model found at epoch 44 (accuracy: 74.11%)
+
+Training:  92%|█████████████████████████████████   | 46/50 [22:21<01:59, 29.80s/it]
+New best model found at epoch 47 (accuracy: 74.90%)
+
+Training:  96%|██████████████████████████████████▌ | 48/50 [23:20<00:59, 29.74s/it]
+New best model found at epoch 49 (accuracy: 75.89%)
+
+Training: 100%|████████████████████████████████████| 50/50 [24:18<00:00, 29.17s/it]
+⏱️ Total training time: 24m 18s
+Inferencing: 100%|█████████████████████████████████████████████████████████████████████| 23/23 [00:03<00:00,  7.12it/s]
+
+✅ Predictions saved to: outputs/from_scratch-b-32-e-50-lr-1e-05-o-SGD-f-0_20250827_110830/predictions.csv
+
+🎯 Accuracy: 0.7549
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.59      0.91      0.71       142
+           I       0.64      0.75      0.69       166
+           L       0.93      0.80      0.86       149
+           P       1.00      0.56      0.72       108
+           T       0.95      0.71      0.81       153
+
+    accuracy                           0.75       718
+   macro avg       0.82      0.75      0.76       718
+weighted avg       0.81      0.75      0.76       718
+
+🖼️ Saved: outputs/from_scratch-b-32-e-50-lr-1e-05-o-SGD-f-0_20250827_110830/confusion_matrix.png
+🖼️ Saved: outputs/from_scratch-b-32-e-50-lr-1e-05-o-SGD-f-0_20250827_110830/confusion_matrix_normalized.png

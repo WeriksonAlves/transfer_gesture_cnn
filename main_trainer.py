@@ -10,8 +10,8 @@ from src.utils import print_device_info
 from torchvision.models import ResNet18_Weights
 from datetime import datetime
 
-# Select experiment mode (0 to 5)
-TRAIN_MODE = 2
+# Select experiment mode (0 to 9)
+TRAIN_MODE = 9
 
 # Default hyperparameters (can be overridden per mode)
 BATCH_SIZE = 32
@@ -78,6 +78,20 @@ elif TRAIN_MODE == 7:  # Transfer learning: ImageNet → Generic+Personalized (S
     FREEZE_BACKBONE = 1
     OPTIMIZER = "SGD"
     MODEL_TRAINED_PATH = ResNet18_Weights.IMAGENET1K_V1
+
+elif TRAIN_MODE == 8:  # From scratch: Generic+Personalized (Adam)
+    NAME_PATH = "from_scratch"
+    DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
+    FREEZE_BACKBONE = 0
+    OPTIMIZER = "Adam"
+    MODEL_TRAINED_PATH = None
+
+elif TRAIN_MODE == 9:  # From scratch: Generic+Personalized (SGD)
+    NAME_PATH = "from_scratch"
+    DATASET_PATH = "data/annotated/INF692_GEST_CLAS_GE-MY.v3i.folder/"
+    FREEZE_BACKBONE = 0
+    OPTIMIZER = "SGD"
+    MODEL_TRAINED_PATH = None
 
 else:
     raise ValueError("Invalid TRAIN_MODE. Choose a value from 0 to 5.")
