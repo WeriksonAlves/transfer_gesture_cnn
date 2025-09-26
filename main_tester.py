@@ -30,9 +30,15 @@ model_tl_paths = {
     "tl_ImageNet_to_personalized_SGD":
         "models/resnet18/tl/tl_ImageNet_to_personalized-b-32-e-50-lr-1e-05-o-SGD-f-1_20250702_020825-95.17.pkl"
 }
+model_fs_paths = {
+    "fs_generic-personalized_Adam":
+        "models/resnet18/fs/from_scratch-b-32-e-50-lr-1e-05-o-Adam-f-0_20250827_110259-100.00.pkl",
+    "fs_generic-personalized_SGD":
+        "models/resnet18/fs/from_scratch-b-32-e-50-lr-1e-05-o-SGD-f-0_20250827_110830-75.89.pkl"
+}
 BATCH_SIZE = 32
-MODEL_PATHS = model_tl_paths
-OUTPUT_DIR = "outputs/resnet18/tl/models_comparation/"
+MODEL_PATHS = model_fs_paths
+OUTPUT_DIR = "outputs/resnet18/fs/models_comparation/"
 
 
 def evaluate_all_models(device: torch.device, data: dict) -> None:

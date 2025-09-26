@@ -1,0 +1,59 @@
+(.venv) werikson@werikson-vaio:~/GitHub/cnn$ /home/werikson/GitHub/cnn/.venv/bin/python /home/werikson/GitHub/cnn/transfer_gesture_cnn/main_tester.py
+PyTorch version: 2.7.1+cu126
+Selected device: cuda
+No CUDA-compatible GPU available.
+
+🧪 Evaluating model: fs_generic-personalized_Adam
+📍 Model path: transfer_gesture_cnn/models/resnet18/fs/from_scratch-b-32-e-50-lr-1e-05-o-Adam-f-0_20250827_110259-100.00.pkl
+
+Inferencing: 100%|█████████████████████████████████████████████| 23/23 [00:20<00:00,  1.11it/s]
+
+✅ Predictions saved to: transfer_gesture_cnn/outputs/resnet18/fs/models_comparation/fs_generic-personalized_Adam/predictions.csv
+
+🎯 Accuracy: 1.0000
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       1.00      1.00      1.00       142
+           I       1.00      1.00      1.00       166
+           L       1.00      1.00      1.00       149
+           P       1.00      1.00      1.00       108
+           T       1.00      1.00      1.00       153
+
+    accuracy                           1.00       718
+   macro avg       1.00      1.00      1.00       718
+weighted avg       1.00      1.00      1.00       718
+
+🖼️ Saved: transfer_gesture_cnn/outputs/resnet18/fs/models_comparation/fs_generic-personalized_Adam/confusion_matrix.png
+🖼️ Saved: transfer_gesture_cnn/outputs/resnet18/fs/models_comparation/fs_generic-personalized_Adam/confusion_matrix_normalized.png
+
+🧪 Evaluating model: fs_generic-personalized_SGD
+📍 Model path: transfer_gesture_cnn/models/resnet18/fs/from_scratch-b-32-e-50-lr-1e-05-o-SGD-f-0_20250827_110830-75.89.pkl
+
+Inferencing: 100%|█████████████████████████████████████████████| 23/23 [00:16<00:00,  1.35it/s]
+
+✅ Predictions saved to: transfer_gesture_cnn/outputs/resnet18/fs/models_comparation/fs_generic-personalized_SGD/predictions.csv
+
+🎯 Accuracy: 0.7549
+
+📋 Classification Report:
+
+              precision    recall  f1-score   support
+
+           F       0.59      0.91      0.71       142
+           I       0.64      0.75      0.69       166
+           L       0.93      0.80      0.86       149
+           P       1.00      0.56      0.72       108
+           T       0.95      0.71      0.81       153
+
+    accuracy                           0.75       718
+   macro avg       0.82      0.75      0.76       718
+weighted avg       0.81      0.75      0.76       718
+
+🖼️ Saved: transfer_gesture_cnn/outputs/resnet18/fs/models_comparation/fs_generic-personalized_SGD/confusion_matrix.png
+🖼️ Saved: transfer_gesture_cnn/outputs/resnet18/fs/models_comparation/fs_generic-personalized_SGD/confusion_matrix_normalized.png
+
+✅ All models evaluated successfully!
+📁 Results saved in 'outputs/eval/' directory.
